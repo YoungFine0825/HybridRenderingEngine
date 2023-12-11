@@ -12,6 +12,10 @@ if(WIN32)
     set(SDL2_PATH "${CMAKE_SOURCE_DIR}/libs/SDL2")
     set(ASSIMP_ROOT_DIR "${CMAKE_SOURCE_DIR}/libs/assimp")
   endif()
+
+  #windows平台上最低要求C++17
+  set(CMAKE_CXX_STANDARD 17)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
 find_package(OpenMP REQUIRED)
@@ -35,6 +39,9 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}")
 set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}")
 target_link_libraries(hybridRenderer ${SDL2_LIBRARY})
 target_link_libraries(hybridRenderer ${ASSIMP_LIBRARY})
+
+#增加资源路径宏
+add_definitions(-DPATH_TO_ASSETS=\"${CMAKE_SOURCE_DIR}/assets/\")
 
 if(WIN32)
     set_target_properties(hybridRenderer PROPERTIES VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build")
